@@ -125,7 +125,7 @@
     const responseButtons = document.getElementById('responseButtons');
 
     let noClickCount = 0;
-    let yesScale = 1;
+    let yesScale = 5;
     let yesFontSize = 18;
 
     function updateYesVisual() {
@@ -137,12 +137,12 @@
       if (noClickCount < 50) {
         noClickCount++;
 
-        yesScale += 0.40;
+        yesScale += 0.10;
         yesFontSize += 5;
         updateYesVisual();
 
         const messages = [
-          "No", "Are you sure?", "Pookie please", 
+          "No", "Are you sure?", "Marianne please", 
           "Don't do this to me :(", "You're breaking my heart", 
           "I'm gonna cry..."
         ];
