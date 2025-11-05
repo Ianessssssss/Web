@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>A Date with You 💖</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #ffd6e8, #ffe6f0);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+
+    .gradient-background {
+      background: linear-gradient(180deg, rgba(255,208,229,1) 0%, rgba(255,232,242,1) 36%, rgba(255,255,255,1) 100%);
+    }
+
+    .bounce2 {
+      animation: bounce2 2s ease infinite;
+    }
+    @keyframes bounce2 {
+      0%,20%,50%,80%,100% { transform: translateY(0); }
+      40% { transform: translateY(-20px); }
+      60% { transform: translateY(-10px); }
+    }
+
+    #yesButton, #noButton {
+      transition: all 0.3s ease-in-out;
+      border-radius: 12px;
+      padding: 12px 25px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    #yesButton {
+      background-color: #22c55e;
+      color: white;
+    }
+
+    #yesButton:hover {
+      background-color: #16a34a;
+      transform: scale(1.1);
+    }
+
+    #noButton {
+      background-color: #ef4444;
+      color: white;
+      
+    }
+
+    #noButton:hover {
+      background-color: #dc2626;
+      transform: scale(1.05);
+    }
+
+    #imageDisplay {
+      width: 320px;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.5s ease-in-out;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #d63384;
+      margin-top: 20px;
+      font-style: italic;
+      text-shadow: 0px 2px 3px rgba(255, 255, 255, 0.7);
+    }
+
+    .full-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100%;
+    }
+
+    .big-love {
+      width: 450px;
+      max-width: 90vw;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body class="gradient-background">
+  <div class="full-center">
+    <img id="imageDisplay" src="./ha.gif" alt="Cute kitten with flowers" />
+    <h2 id="valentineQuestion" class="my-4">
+      Will you come to a date with me?
+    </h2>
+    <div class="flex gap-4 pt-4" id="responseButtons">
+      <button id="yesButton" class="bounce2">Yes </button>
+      <button id="noButton">No </button>
+    </div>
+  </div>
+
+  <script type="module">
+    import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+
+    const yesButton = document.getElementById('yesButton');
+    const noButton = document.getElementById('noButton');
+    const imageDisplay = document.getElementById('imageDisplay');
+    const valentineQuestion = document.getElementById('valentineQuestion');
+    const responseButtons = document.getElementById('responseButtons');
+
+    let noClickCount = 0;
+    let yesScale = 1;
+    let yesFontSize = 18;
+
+    function updateYesVisual() {
+      yesButton.style.transform = `scale(${yesScale})`;
+      yesButton.style.fontSize = `${yesFontSize}px`;
+    }
+
+    noButton.addEventListener('click', function () {
+      if (noClickCount < 50) {
+        noClickCount++;
+
+        yesScale += 0.40;
+        yesFontSize += 5;
+        updateYesVisual();
+
+        const messages = [
+          "No", "Are you sure?", "Pookie please", 
+          "Don't do this to me :(", "You're breaking my heart", 
+          "I'm gonna cry..."
+        ];
+        if (noClickCount <= messages.length) {
+          noButton.textContent = messages[noClickCount - 1];
+        }
+
+        if (noClickCount === 50) {
+          noButton.style.display = 'none';
+        }
+      }
+    });
+
+    yesButton.addEventListener('click', () => {
+      imageDisplay.src = './love.gif';
+      imageDisplay.classList.remove('float');
+      imageDisplay.classList.add('big-love');
+      valentineQuestion.textContent = "Our date is on November 19, 2025 💖";
+      responseButtons.style.display = 'none';
+
+      confetti({
+        particleCount: 150,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
+    });
+
+    updateYesVisual();
+  </script>
+</body>
+</html>
